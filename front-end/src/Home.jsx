@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import logo from './assets/logo.svg';
+import "./home.css";
 
 function Home() {
   const [auth, setAuth] = useState(false);
@@ -37,12 +39,30 @@ function Home() {
           </button>
         </div>
       ) : (
-        <div>
-          <h3>{message}</h3>
-          <h3>Login Now</h3>
-          <Link to="/login" className="btn btn-primary">
-            Login
-          </Link>
+        <div className="container">
+          <nav>
+            <div className="logo_container">
+              <img src={logo} width="44" height="43" viewBox="0 0 44 43" fill="none" />
+            </div>
+
+            <div className="menu_container">
+              <ul>
+                <li><a href="home" className="active">About the Universe</a></li>
+                <li><a href="home" className="active">Contact</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <div className="content">
+              <div class="hero-text">
+                <p className="content_para">ENVIRONMENTAL MANAGEMENT BUREAU REGION III</p>
+                <h2><span className="content_span">EMB Universe of Firms Central Database</span></h2>
+                <p className="content_alice">A harmonization of different firms and industries within Region III Monitoring Plan</p>               
+                  <Link to="/login" className="btn btn-primary">
+                    Get Started
+                  </Link>
+              </div>
+          </div>
         </div>
       )}
     </div>
