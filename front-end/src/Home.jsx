@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Universe from "./Universe";
+import { Link, useNavigate } from "react-router-dom";
 import logo from './assets/logo.svg';
+import homelogo from '../public/emblogomenu.png';
 import "./home.css";
 
 function Home() {
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate();
+
   axios.defaults.withCredentials = true;
   useEffect(() => {
     axios
@@ -16,6 +20,7 @@ function Home() {
         if (res.data.Status === "Success") {
           setAuth(true);
           setName(res.data.name);
+          
         } else {
           setAuth(false);
           setMessage(res.data.Error);
@@ -42,7 +47,7 @@ function Home() {
         <div className="container">
           <nav>
             <div className="logo_container">
-              <img src={logo} width="44" height="43" viewBox="0 0 44 43" fill="none" />
+              <img src={homelogo} width="44" height="43" viewBox="0 0 44 43" fill="none" />
             </div>
 
             <div className="menu_container">

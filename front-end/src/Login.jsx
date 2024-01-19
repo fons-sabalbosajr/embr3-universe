@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./login.css"
+import "./login.css";
+import homelogo from "../public/emblogomenu.png";
 
 function Login() {
   const [values, setValues] = useState({
@@ -14,7 +15,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!values.email.trim() || !values.password.trim()) {
-      alert('Email or password cannot be empty');
+      alert("Email or password cannot be empty");
       return;
     }
     try {
@@ -24,7 +25,7 @@ function Login() {
 
       if (response.data && response.data.Status === "Success") {
         console.log("Login Successful");
-        navigate("/");
+        navigate("/universe");
       } else {
         const errorMessage =
           response.data && response.data.Error !== undefined
@@ -42,8 +43,18 @@ function Login() {
 
   return (
     <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
-      <div className="bg-white p-3 rounded">
+      <div className="bg-white p-3 rounded-10">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img src={homelogo} width="100" height="100" alt="Logo" />
+        </div>
         <p>
+          <br />
           ENVIRONMENTAL MANAGEMENT BUREAU REGION III <br />
           <center>Universe of Firms</center>
         </p>
