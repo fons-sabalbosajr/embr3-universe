@@ -63,7 +63,7 @@ function Login() {
         </h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email">
+            <label htmlFor="email" className="login-label">
               <strong>Email</strong>
             </label>
             <input
@@ -75,9 +75,10 @@ function Login() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password">
+            <label htmlFor="password" className="login-label">
               <strong>Password</strong>
             </label>
+            
             <input
               type="password"
               placeholder="Enter Password"
