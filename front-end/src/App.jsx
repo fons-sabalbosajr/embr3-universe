@@ -1,25 +1,32 @@
-import React from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+// App.jsx
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Register from './Register';
 import Login from './Login';
 import Universe from './Universe';
-import MainForm from './MainForm'
-
+import Dashboard from './menu-component/Dashboard';
+import ExportData from './menu-component/ExportData';
+import Province from './menu-province/Province';
+import Survey from './menu-province/Survey';
+import MBU from './menu-province/MBU';
 
 function App() {
-  return(
-     <BrowserRouter>
-     <Routes>
-      <Route path='/' element={<Home />}></Route>
-      <Route path='/register' element={<Register />}></Route>
-      <Route path='/home' element={<Home />}></Route>
-      <Route path='/login' element={<Login />}></Route>
-      <Route path='/universe' element={<Universe />}></Route>
-      <Route path='/mainform' element={<MainForm />}></Route>
+  const [dashboardKey, setDashboardKey] = useState(0);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/universe' element={<Universe />} />
+        <Route path='/dashboard' element={<Universe />} />
+        {/* Add other routes as needed */}
       </Routes>
-      </BrowserRouter>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

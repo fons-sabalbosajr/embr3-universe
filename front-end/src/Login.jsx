@@ -42,65 +42,69 @@ function Login() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
-      <div className="bg-white p-3 rounded-10">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img src={homelogo} width="100" height="100" alt="Logo" />
-        </div>
-        <p>
-          <br />
-          ENVIRONMENTAL MANAGEMENT BUREAU REGION III <br />
-          <center>Universe of Firms</center>
-        </p>
-        <h3>
-          <center>SIGN-IN</center>
-        </h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="login-label">
-              <strong>Email</strong>
-            </label>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              name="email"
-              onChange={(e) => setValues({ ...values, email: e.target.value })}
-              className="form-control rounded-0"
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="login-label">
-              <strong>Password</strong>
-            </label>
-            
-            <input
-              type="password"
-              placeholder="Enter Password"
-              name="password"
-              onChange={(e) =>
-                setValues({ ...values, password: e.target.value })
-              }
-              className="form-control rounded-0"
-            />
-          </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">
-            Login
-          </button>
-          <p>You are agree to our Terms and Policies</p>
-          <Link
-            to="/register"
-            button
-            className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none"
+    <div className="background-login">
+      <div className="background-form">
+        <div className="form">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            Create Account
-          </Link>
-        </form>
+            <img src={homelogo} width="100" height="100" alt="Logo" />
+          </div>
+          <p>
+            <br />
+            ENVIRONMENTAL MANAGEMENT BUREAU REGION III <br />
+            <center>Universe Central Database System</center>
+          </p>
+          <h3>
+            <center>SIGN-IN</center>
+          </h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="email" className="login-label">
+                <strong>Email</strong>
+              </label>
+              <input
+                type="email"
+                placeholder="Enter Email"
+                name="email"
+                onChange={(e) =>
+                  setValues({ ...values, email: e.target.value })
+                }
+                className="form-control rounded-0"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="login-label">
+                <strong>Password</strong>
+              </label>
+
+              <input
+                type="password"
+                placeholder="Enter Password"
+                name="password"
+                onChange={(e) =>
+                  setValues({ ...values, password: e.target.value })
+                }
+                className="form-control rounded-0"
+              />
+            </div>
+            <button type="submit" className="btn btn-success w-100 rounded-0">
+              Login
+            </button>
+            <p>You are agree to our Terms and Policies</p>
+            <Link
+              to="/register"
+              button
+              className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none"
+            >
+              Create Account
+            </Link>
+          </form>
+        </div>
       </div>
     </div>
   );

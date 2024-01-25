@@ -23,3 +23,34 @@ body {
 .login-label{
     margin-bottom: 5px;
 }
+
+.form{
+    background-color: rgb(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    top: 40%;
+    left: 50%;
+}
+
+.background-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.background-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../src/assets/bglogin.JPG'); /* Adjust the path based on your project structure */
+    height: 100vh;
+    background-size: cover;
+}
+
+.input-txt{
+    display: flex;
+    position: absolute;
+    width: auto;
+    
+}

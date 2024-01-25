@@ -11,15 +11,14 @@
 }
 
 .sidebar{
-    color: #00398e;
-    
+    color: #ffffff;
 }
 
 .logo{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #00398e;
+    color: #0066ff;
     padding: 10px;
 }
 
@@ -30,9 +29,8 @@
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-    border-radius: 50%;
-    margin-left: 30px;
-    color: #00398e;
+    margin-left: 20px;
+    color: #ffffff;
 }
 
 .logo-icon-text{
@@ -46,8 +44,9 @@
 }
 
 .ant-menu-item-dark > a {
-    color: #fff;
+    color: #B6BBC4;
 }
+
 
 .menu-bar{
     height: 88vh;
@@ -57,8 +56,37 @@
     gap: 15px;
     font-size: 1rem;
     position: relative;
+    //color:#B6BBC4;
 }
 
 .toggle{
-    margin-top: 5rem;
+    position: fixed;
+    bottom: 25px;
+    left: 20px;
+    margin-bottom: 50px; /* Adjust the margin as needed */
+    z-index: 1;
+}
+
+.btn-logout{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    margin-bottom: 16px; /* Adjust the margin as needed */
+    z-index: 1;
+}
+
+.user-name{
+    margin-top: 25px;
+    margin-right: 25px;
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    color:#B6BBC4;
+}
+
+.link-menu{
+    text-decoration: none;
 }
