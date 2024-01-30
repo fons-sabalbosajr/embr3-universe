@@ -23,7 +23,7 @@ const dbConfig = {
   server: "10.14.77.248",
   database: "db_universe",
   options: {
-    encrypt: false, // Use this if you're on Windows Azure
+    encrypt: false, // Use this if you're on Windows Azure, make it == true
   },
 };
 

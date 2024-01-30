@@ -21,8 +21,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/universe' element={<Universe />} />
-        <Route path='/dashboard' element={<Universe />} />
+        <Route path='/universe/*' element={<Universe />} />
         {/* Add other routes as needed */}
       </Routes>
     </BrowserRouter>

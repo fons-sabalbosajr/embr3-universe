@@ -13,15 +13,40 @@ const MenuList = ({ refreshDashboard }) => {
   const handleDashboardClick = () => {
     refreshDashboard(); // Call the refresh function
   };
+
+  const handleExportDataClick = () => {
+    navigate("/universe/exportdata"); // Programmatically navigate to Export Data
+  };
+
+  const handleSurveyClick = () => {
+    navigate("/universe/survey"); // Programmatically navigate to Survey
+  };
+  const handleMBUClick = () => {
+    navigate("/universe/mbu"); // Programmatically navigate to MBU
+  };
+
+  const isMenuSelected = (path) => {
+    return location.pathname.includes(path);
+  };
+
   return (
     <ConfigProvider>
-      <Menu mode="inline" className="menu-bar" theme="dark">
+      <Menu
+        mode="inline"
+        className="menu-bar"
+        theme="dark"
+        defaultOpenKeys={["reports"]}
+      >
         <Menu.Item
           key="dashboard"
           icon={<DashboardFilled />}
           className="menu-bar-item"
         >
-           <Link to="/dashboard" className="link-menu" onClick={handleDashboardClick}>
+          <Link
+            to="/universe/dashboard"
+            className="link-menu"
+            onClick={handleDashboardClick}
+          >
             Dashboard
           </Link>
         </Menu.Item>
@@ -72,19 +97,23 @@ const MenuList = ({ refreshDashboard }) => {
 
         <Menu.SubMenu key="subreports" icon={<PushpinFilled />} title="Reports">
           <Menu.Item key="subreports-1">
-            <Link to="/survey" className="link-menu">
+            <Link to="/universe/survey" className={`link-menu-hover ${isMenuSelected('survey') ? 'selected' : ''}`}>
               Survey List
             </Link>
           </Menu.Item>
           <Menu.Item key="subreports-2">
-            <Link to="/survey" className="link-menu">
+            <Link to="/universe/mbu" className={`link-menu-hover ${isMenuSelected('survey') ? 'selected' : ''}`}>
               Manila Bay Unit
             </Link>
           </Menu.Item>
         </Menu.SubMenu>
 
         <Menu.Item key="export" icon={<DownCircleFilled />}>
-          <Link to="/exportdata" className="link-menu">
+          <Link
+            to="/universe/exportdata"
+            className="link-menu"
+            onClick={handleExportDataClick}
+          >
             Export Data
           </Link>
         </Menu.Item>

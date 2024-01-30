@@ -90,3 +90,12 @@
 .link-menu{
     text-decoration: none;
 }
+
+.link-menu:hover, .selected {
+    color: #1890ff;
+  }
+
+  .link-menu-hover:hover {
+    color: #9cc6ed !important;
+    text-decoration: none !important;
+  }

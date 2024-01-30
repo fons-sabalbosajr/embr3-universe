@@ -1,23 +1,25 @@
-// Universe.jsx
-import React, { useState, useEffect } from 'react';
-import { Button, Layout, theme, Tooltip } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Logo from './components/Logo';
-import MenuList from './components/MenuList';
-import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import Dashboard from './menu-component/Dashboard';
-import './index.css';
-import Province from './menu-province/Province';
+import { Button, Layout, theme, Tooltip } from "antd";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import {
+  LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
+import Dashboard from "./menu-component/Dashboard";
+import "./index.css";
+import Logo from "./components/Logo";
+import MenuList from "./components/MenuList";
+import ExportData from "./menu-component/ExportData";
+import Survey from "./menu-province/Survey";
+import MBU from "./menu-province/MBU";
 
 const { Header, Sider, Content } = Layout;
 
 function DashboardContent() {
   const [refreshKey, setRefreshKey] = useState(0);
-
-  const refreshDashboard = () => {
-    setRefreshKey((prevKey) => prevKey + 1);
-  };
 
   return (
     <div style={{ height: "100%", overflow: "auto" }}>
@@ -25,7 +27,6 @@ function DashboardContent() {
     </div>
   );
 }
-
 
 function Universe() {
   const [collapsed, setCollapsed] = useState(false);
@@ -37,9 +38,9 @@ function Universe() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8081')
+      .get("http://localhost:8081")
       .then((res) => {
-        if (res.data.Status === 'Success') {
+        if (res.data.Status === "Success") {
           setAuth(true);
           setName(res.data.name);
         } else {
@@ -54,11 +55,11 @@ function Universe() {
 
   const handleDelete = () => {
     axios
-      .get('http://localhost:8081/logout')
+      .get("http://localhost:8081/logout")
       .then((res) => {
         setAuth(false);
-        setName('');
-        navigate('/home', { replace: true });
+        setName("");
+        navigate("/home", { replace: true });
       })
       .catch((err) => console.log(err));
   };
@@ -68,47 +69,57 @@ function Universe() {
   } = theme.useToken();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: "100vh" }}>
       {auth && (
         <Sider
           width={250}
           collapsible
           trigger={null}
           collapsed={collapsed}
-          className='sidebar'
+          className="sidebar"
         >
           <Logo />
-          <MenuList refreshDashboard={DashboardContent.refreshDashboard} />
-          <Tooltip title='Logout' placement='left' arrowPointAtCenter>
+          <MenuList
+            refreshDashboard={DashboardContent.refreshDashboard}
+            navigate={navigate}
+          />
+          <Tooltip title="Logout" placement="left">
             <Button
               icon={<LogoutOutlined />}
               onClick={handleDelete}
-              className='btn-logout'
-              style={{ backgroundColor: '#B6BBC4' }}
+              className="btn-logout"
+              style={{ backgroundColor: "#B6BBC4" }}
             ></Button>
           </Tooltip>
         </Sider>
       )}
       <Layout>
         {auth && (
-          <Header style={{ padding: 0, backgroundColor: '#31304D' }}>
-            <Tooltip title='Toggle Menu' placement='left' arrowPointAtCenter>
+          <Header style={{ padding: 0, backgroundColor: "#31304D" }}>
+            <Tooltip title="Toggle Menu" placement="left">
               <Button
-                type='text'
-                className='toggle'
+                type="text"
+                className="toggle"
                 onClick={() => setCollapsed(!collapsed)}
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                style={{ backgroundColor: '#B6BBC4' }}
+                style={{ backgroundColor: "#B6BBC4" }}
               />
             </Tooltip>
-            <h6 className='user-name'>Hi, {name}</h6>
+            <h6 className="user-name">Hi, {name}</h6>
           </Header>
         )}
         {auth && (
-        <Content style={{ padding: "24px", backgroundColor: colorBgContainer }}>
-        <DashboardContent />
-        {/* ... (other code) */}
-      </Content>
+           <Content
+           style={{ padding: "24px", backgroundColor: colorBgContainer }}
+         >
+           <Routes>
+             <Route path="dashboard" element={<Dashboard />} />
+             <Route path="exportdata" element={<ExportData />} />
+             <Route path="survey" element={<Survey />} />
+             <Route path="mbu" element={<MBU />} />
+             
+           </Routes>
+         </Content>
         )}
       </Layout>
     </Layout>
