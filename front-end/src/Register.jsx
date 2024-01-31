@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import homelogo from "../public/emblogomenu.png";
+import homelogo from "./assets/emblogomenu.png";
 
 function Register() {
   const [values, setValues] = useState({

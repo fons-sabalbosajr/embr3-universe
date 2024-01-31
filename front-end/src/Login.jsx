@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./login.css";
-import homelogo from "../public/emblogomenu.png";
+import homelogo from "./assets/emblogomenu.png";
 
 function Login() {
   const [values, setValues] = useState({

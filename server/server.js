@@ -1,5 +1,5 @@
 import express from "express";
-import sql from "mssql";
+import mssql from "mssql";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -23,11 +23,11 @@ const dbConfig = {
   server: "10.14.77.248",
   database: "db_universe",
   options: {
-    encrypt: false, // Use this if you're on Windows Azure, make it == true
+    encrypt: false, // Use :true this if you're on Windows Azure
   },
 };
 
-const pool = new sql.ConnectionPool(dbConfig);
+const pool = new mssql.ConnectionPool(dbConfig);
 const poolConnect = pool.connect();
 
 poolConnect
@@ -40,29 +40,86 @@ poolConnect
 
 /* FOR AUTHENTICATION OF ACCOUNT */
 const verifyUser = (req, res, next) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.json({ Error: "You are not logged in" });
-    } else {
-        jwt.verify(token, "jwt-secret-key", (err, decoded) => {
-            if (err) {
-                return res.json({ Error: "Token is not in the correct condition" });
-            } else {
-                req.name = decoded.name;
-                next();
-            }
-        });
-    }
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json({ Error: "You are not logged in" });
+  } else {
+    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+      if (err) {
+        return res.json({ Error: "Token is not in the correct condition" });
+      } else {
+        req.name = decoded.name;
+        next();
+      }
+    });
+  }
 };
 
-app.get('/', verifyUser, (req, res) => {
-    return res.json({ Status: "Success", name: req.name });
+app.get("/", verifyUser, (req, res) => {
+  return res.json({ Status: "Success", name: req.name });
 });
 
-app.get('/logout', (req, res)=> {
-    res.clearCookie('token');
-    return res.json({Status: "Logout Success"});
-})
+app.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  return res.json({ Status: "Logout Success" });
+});
+
+app.get("/api/get-universe-au", async (req, res) => {
+  try {
+    const pool = await mssql.connect(dbConfig);
+    const result = await pool
+      .request()
+      .query(`
+        SELECT 
+          [Serial No], 
+          [Proponent Name], 
+          CONCAT(
+            [Project Title], 
+            CHAR(13) + CHAR(10) + COALESCE([Complete Address], ''), 
+            CHAR(13) + CHAR(10) + COALESCE([ECC Process Type], ''), 
+            CHAR(13) + CHAR(10) + COALESCE([ECC Reference No], ''), 
+            CHAR(13) + CHAR(10) + COALESCE(FORMAT([Date Approved], 'MM/dd/yyyy'), '')
+          ) AS ConcatenatedValues 
+        FROM tb_universe_AU
+      `);
+
+    const updatedResult = result.recordset.map((row) => ({
+      "Serial No": row["Serial No"],
+      "Proponent Name": row["Proponent Name"],
+      "ConcatenatedValues": `${row["ConcatenatedValues"]}`,
+    }));
+
+    res.json(updatedResult);
+  } catch (error) {
+    console.error("Error executing SQL query:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/api/get-universe-au", async (req, res) => {
+  try {
+    const eccProcessType = req.query.eccProcessType || '';
+    
+    const pool = await mssql.connect(dbConfig);
+    const result = await pool
+      .request()
+      .query(
+        `SELECT [Serial No], [Proponent Name], CONCAT([Project Title], CHAR(13) + CHAR(10) + ISNULL([Complete Address], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Process Type], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Reference No], '') + CHAR(13) + CHAR(10) + ISNULL(FORMAT([Date Approved], 'MM/dd/yyyy'), '')) AS ConcatenatedValues FROM tb_universe_AU
+        WHERE [ECC Process Type] = '${eccProcessType}'`
+      );
+
+    const updatedResult = result.recordset.map((row) => ({
+      "Serial No": row["Serial No"],
+      "Proponent Name": row["Proponent Name"],
+      "ConcatenatedValues": `${row["ConcatenatedValues"]}`,
+    }));
+
+    res.json(updatedResult);
+  } catch (error) {
+    console.error("Error executing SQL query:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 
 /* FOR REGISTRATION AND SIGN UP ACCOUNT */

@@ -12,9 +12,11 @@ import Dashboard from "./menu-component/Dashboard";
 import "./index.css";
 import Logo from "./components/Logo";
 import MenuList from "./components/MenuList";
+import Region from "./menu-component/Region";
 import ExportData from "./menu-component/ExportData";
-import Survey from "./menu-province/Survey";
-import MBU from "./menu-province/MBU";
+import Survey from "./menu-component/Survey";
+import MBU from "./menu-component/MBU";
+import Province from "./menu-province/Province";
 
 const { Header, Sider, Content } = Layout;
 
@@ -114,10 +116,11 @@ function Universe() {
          >
            <Routes>
              <Route path="dashboard" element={<Dashboard />} />
-             <Route path="exportdata" element={<ExportData />} />
+             <Route path="region" element={<Region />} />
+             <Route path="province" element={<Province />} />
              <Route path="survey" element={<Survey />} />
              <Route path="mbu" element={<MBU />} />
-             
+             <Route path="exportdata" element={<ExportData />} />
            </Routes>
          </Content>
         )}
