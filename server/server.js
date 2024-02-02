@@ -96,31 +96,50 @@ app.get("/api/get-universe-au", async (req, res) => {
   }
 });
 
-app.get("/api/get-universe-au", async (req, res) => {
-  try {
-    const eccProcessType = req.query.eccProcessType || '';
+// app.get("/api/get-universe-au", async (req, res) => {
+//   try {
+//     const eccProcessType = req.query.eccProcessType || '';
     
+//     const pool = await mssql.connect(dbConfig);
+//     const result = await pool
+//       .request()
+//       .query(
+//         `SELECT [Serial No], [Proponent Name], CONCAT([Project Title], CHAR(13) + CHAR(10) + ISNULL([Complete Address], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Process Type], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Reference No], '') + CHAR(13) + CHAR(10) + ISNULL(FORMAT([Date Approved], 'MM/dd/yyyy'), '')) AS ConcatenatedValues FROM tb_universe_AU
+//         WHERE [ECC Process Type] = '${eccProcessType}'`
+//       );
+
+//     const updatedResult = result.recordset.map((row) => ({
+//       "Serial No": row["Serial No"],
+//       "Proponent Name": row["Proponent Name"],
+//       "ConcatenatedValues": `${row["ConcatenatedValues"]}`,
+//     }));
+
+//     res.json(updatedResult);
+//   } catch (error) {
+//     console.error("Error executing SQL query:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+app.get("/api/get-details-by-serial-number/:serialNumber", async (req, res) => {
+  const serialNumber = req.params.serialNumber;
+
+  try {
     const pool = await mssql.connect(dbConfig);
     const result = await pool
       .request()
       .query(
-        `SELECT [Serial No], [Proponent Name], CONCAT([Project Title], CHAR(13) + CHAR(10) + ISNULL([Complete Address], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Process Type], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Reference No], '') + CHAR(13) + CHAR(10) + ISNULL(FORMAT([Date Approved], 'MM/dd/yyyy'), '')) AS ConcatenatedValues FROM tb_universe_AU
-        WHERE [ECC Process Type] = '${eccProcessType}'`
+        `SELECT * FROM tb_universe_AU WHERE [Serial No] = ${serialNumber}`
       );
 
-    const updatedResult = result.recordset.map((row) => ({
-      "Serial No": row["Serial No"],
-      "Proponent Name": row["Proponent Name"],
-      "ConcatenatedValues": `${row["ConcatenatedValues"]}`,
-    }));
+    const details = result.recordset[0]; // Assuming there's only one matching record
 
-    res.json(updatedResult);
+    res.json(details);
   } catch (error) {
     console.error("Error executing SQL query:", error);
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 /* FOR REGISTRATION AND SIGN UP ACCOUNT */
 app.post("/register", (req, res) => {
@@ -154,7 +173,7 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
   const sqlQuery = "SELECT * FROM tb_login WHERE email = @email";
   const request = pool.request();
-  request.input("email", sql.VarChar, req.body.email);
+  request.input("email", mssql.VarChar, req.body.email);
 
   request.query(sqlQuery, (err, data) => {
     if (err) {
@@ -197,6 +216,8 @@ app.post("/login", (req, res) => {
     }
   });
 });
+
+
 
 app.listen(8081, () => {
   console.log("Server running on port 8081");
