@@ -13,13 +13,16 @@ import {
   DatePicker,
   InputNumber,
   Mentions,
-  TreeSelect } from "antd";
+  TreeSelect,
+  Row,
+  Col,
+} from "antd";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Pagination } from "antd";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
-const { RangePicker } = DatePicker
+const { RangePicker } = DatePicker;
 
 const getColorByPermitType = (permitType) => {
   switch (permitType) {
@@ -119,15 +122,26 @@ const Region = () => {
     "Proponent Name": "",
     "Project Title": "",
     "Complete Address": "",
-    "PSIC_Code": "",
+    PSIC_Code: "",
     "Industry Category Project Type": "",
     "Industry Category Sub-Type": "",
     "Industry Classfication": "",
-
+    "Other Project Type": "",
+    "Within Manila Bay Area": "",
+    "Receiving Waterbody (Major River & River system)": "",
+    "Number of Employees": "",
+    "BOD_kg/day": "",
+    Longitude: "",
+    Latitude: "",
+    "Congressional District": "",
+    Street: "",
+    Barangay: "",
+    City: "",
+    Province: "",
     // Add other fields as needed
   });
 
-  const [componentSize, setComponentSize] = useState('small');
+  const [componentSize, setComponentSize] = useState("small");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
@@ -143,7 +157,7 @@ const Region = () => {
 
       setSelectedRow(row);
       AntModal.info({
-        title: `Serial No: ${row["Serial No"]}`,
+        title: `Project Title: ${row["Serial No"]}`,
 
         content: (
           <div>
@@ -151,153 +165,177 @@ const Region = () => {
             <Tabs type="card">
               <TabPane tab="General Info." key="1">
                 <Form
-                 labelCol={{
-                  span: 5,
-                }}
-                wrapperCol={{
-                  span: 10,
-                }}
-                layout="horizontal"
-                initialValues={{
-                  size: componentSize,
-                }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize}
-                style={{
-                  maxWidth: 600,
-                }}
+                  layout="horizontal"
+                  initialValues={{
+                    size: componentSize,
+                    InputNumber: details["ECC Reference No"],
+                    Input: details["Proponent Name"],
+                    TextArea: details["Project Title"],
+                    PSIC_Code: details["PSIC_Code"],
+                    Industry_Category_Project_Type:
+                      details["Industry Category Project Type"],
+                    Industry_Category_Sub_Type:
+                      details["Industry Category Sub-Type"],
+                    Industry_Classification: details["Industry Classification"],
+                    Other_Project_Type: details["Other Project Type"],
+                    Within_Manila_Bay_Area: details["Within Manila Bay Area"],
+                    Receiving_Waterbody:
+                      details[
+                        "Receiving Waterbody (Major River & River system)"
+                      ],
+                    Number_of_Employees: details["Number of Employees"],
+                    BOD_kg_per_day: details["BOD_kg/day"],
+                    Longitude: details["Longitude"],
+                    Latitude: details["Latitude"],
+                    Congressional_District: details["Congressional District"],
+                    Complete_Address: details["Complete Address"],
+                    Street: details["Street"],
+                    Barangay: details["Barangay"],
+                    City: details["City"],
+                    Province: details["Province"],
+                    // Add other fields as needed
+                  }}
+                  onValuesChange={onFormLayoutChange}
+                  size={componentSize}
+                  style={{
+                    maxWidth: 1200,
+                    display: "grid",
+                    alignItems: "center",
+                  }}
+                  variant="filled"
+                  colon={false}
+                  labelCol={{ flex: "150px" }}
+                  labelAlign="left"
+                  labelWrap
+                  wrapperCol={{
+                    flex: 1,
+                  }}
                 >
-                  <Form.Item
-                    label="Input"
-                    name="Input"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
+                  <Row>
+                    <Col span={12} offset={0}>
+                      {" "}
+                      <Form.Item label={<span className="form-item-label">ECC Reference No.</span>} name="InputNumber" className="form-item">
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item label={<span className="form-item-label">Proponent Name</span>} name="Input" className="form-item">
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item label={<span className="form-item-label">Project Title</span>} name="TextArea" className="form-item">
+                        <Input.TextArea className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Industry Category Project Type</span>}
+                        name="Industry_Category_Project_Type" className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Industry Category Sub Type</span>}
+                        name="Industry_Category_Sub_Type" className="form-item"
+                      >
+                        <Input.TextArea className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Industry Classification</span>}
+                        name="Industry_Classification" className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Other Project Type</span>}
+                        name="Other_Project_Type" className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="InputNumber"
-                    name="InputNumber"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Within Manila Bay Area</span>}
+                        name="Within_Manila_Bay_Area" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="TextArea"
-                    name="TextArea"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <Input.TextArea />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Receiving Water Body</span>}
+                        name="Receiving_Waterbody" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                    </Col>
 
-                  <Form.Item
-                    label="Mentions"
-                    name="Mentions"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <Mentions />
-                  </Form.Item>
+                    <Col span={12} offset={0}>
+                      <Form.Item
+                        label={<span className="form-item-label">No. of Employees</span>}
+                        name="Number_of_Employees" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="Select"
-                    name="Select"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <Select />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">BOD</span>}
+                        name="BOD_kg_per_day" className="form-item"
+                      >
+                        <Input className="input-item-short" addonAfter={<span className="input-addon">kg/day</span>} />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="Cascader"
-                    name="Cascader"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <Cascader />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Latitude</span>}
+                        name="Latitude" className="form-item"
+                      >
+                        <Input className="input-item-short" addonAfter={<span className="input-addon">°</span>} />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="TreeSelect"
-                    name="TreeSelect"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <TreeSelect />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Longitude</span>}
+                        name="Longitude" className="form-item"
+                      >
+                        <Input className="input-item-short" addonAfter={<span className="input-addon">°</span>} />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="DatePicker"
-                    name="DatePicker"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <DatePicker />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Congressional District</span>}
+                        name="Congressional_District" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
 
-                  <Form.Item
-                    label="RangePicker"
-                    name="RangePicker"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input!",
-                      },
-                    ]}
-                  >
-                    <RangePicker />
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Complete Address</span>}
+                        name="Complete_Address" className="form-item"
+                      >
+                        <Input.TextArea className="input-item" />
+                      </Form.Item>
 
-                  <Form.Item
-                    wrapperCol={{
-                      offset: 6,
-                      span: 16,
-                    }}
-                  >
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
-                  </Form.Item>
+                      <Form.Item
+                        label={<span className="form-item-label">Street</span>}
+                        name="Street" className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
+
+                      <Form.Item
+                        label={<span className="form-item-label">Barangay</span>}
+                        name="Barangay" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+
+                      <Form.Item
+                        label={<span className="form-item-label">City</span>}
+                        name="City" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+
+                      <Form.Item
+                        label={<span className="form-item-label">Province</span>}
+                        name="Province" className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                      
+                    </Col>
+                  </Row>
                 </Form>
               </TabPane>
               <TabPane tab="Concerned Unit" key="2"></TabPane>
