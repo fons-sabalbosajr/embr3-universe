@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 const dbConfig = {
   user: "erms-server",
-  password: "EMBR3erms20212",
+  password: "EMBR3erms20213",
   server: "10.14.77.248",
   database: "db_universe",
   options: {
@@ -95,31 +95,6 @@ app.get("/api/get-universe-au", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-// app.get("/api/get-universe-au", async (req, res) => {
-//   try {
-//     const eccProcessType = req.query.eccProcessType || '';
-    
-//     const pool = await mssql.connect(dbConfig);
-//     const result = await pool
-//       .request()
-//       .query(
-//         `SELECT [Serial No], [Proponent Name], CONCAT([Project Title], CHAR(13) + CHAR(10) + ISNULL([Complete Address], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Process Type], '') + CHAR(13) + CHAR(10) + ISNULL([ECC Reference No], '') + CHAR(13) + CHAR(10) + ISNULL(FORMAT([Date Approved], 'MM/dd/yyyy'), '')) AS ConcatenatedValues FROM tb_universe_AU
-//         WHERE [ECC Process Type] = '${eccProcessType}'`
-//       );
-
-//     const updatedResult = result.recordset.map((row) => ({
-//       "Serial No": row["Serial No"],
-//       "Proponent Name": row["Proponent Name"],
-//       "ConcatenatedValues": `${row["ConcatenatedValues"]}`,
-//     }));
-
-//     res.json(updatedResult);
-//   } catch (error) {
-//     console.error("Error executing SQL query:", error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
 
 app.get("/api/get-details-by-serial-number/:serialNumber", async (req, res) => {
   const serialNumber = req.params.serialNumber;

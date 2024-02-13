@@ -16,8 +16,9 @@ import {
   TreeSelect,
   Row,
   Col,
+  Card,Checkbox, Space
 } from "antd";
-import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
+import { EyeOutlined, SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { Pagination } from "antd";
 
 const { Option } = Select;
@@ -96,10 +97,6 @@ const Region = () => {
     fetchData();
   }, []);
 
-  const headers = Object.keys(data[0] || {}).filter(
-    (header) => header !== "id"
-  ); // Dynamic headers
-
   // Calculate the index range based on pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -117,30 +114,6 @@ const Region = () => {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const [editedData, setEditedData] = useState({
-    "ECC Reference No": "",
-    "Proponent Name": "",
-    "Project Title": "",
-    "Complete Address": "",
-    PSIC_Code: "",
-    "Industry Category Project Type": "",
-    "Industry Category Sub-Type": "",
-    "Industry Classfication": "",
-    "Other Project Type": "",
-    "Within Manila Bay Area": "",
-    "Receiving Waterbody (Major River & River system)": "",
-    "Number of Employees": "",
-    "BOD_kg/day": "",
-    Longitude: "",
-    Latitude: "",
-    "Congressional District": "",
-    Street: "",
-    Barangay: "",
-    City: "",
-    Province: "",
-    // Add other fields as needed
-  });
-
   const [componentSize, setComponentSize] = useState("small");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -157,8 +130,7 @@ const Region = () => {
 
       setSelectedRow(row);
       AntModal.info({
-        title: `Project Title: ${row["Serial No"]}`,
-
+        title: `Serial No.: ${row["Serial No"]}`,
         content: (
           <div>
             {" "}
@@ -214,50 +186,89 @@ const Region = () => {
                   <Row>
                     <Col span={12} offset={0}>
                       {" "}
-                      <Form.Item label={<span className="form-item-label">ECC Reference No.</span>} name="InputNumber" className="form-item">
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Proponent Name
+                          </span>
+                        }
+                        name="Input"
+                        className="form-item"
+                      >
                         <Input className="input-item" />
                       </Form.Item>
-                      <Form.Item label={<span className="form-item-label">Proponent Name</span>} name="Input" className="form-item">
-                        <Input className="input-item" />
-                      </Form.Item>
-                      <Form.Item label={<span className="form-item-label">Project Title</span>} name="TextArea" className="form-item">
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">Project Title</span>
+                        }
+                        name="TextArea"
+                        className="form-item"
+                      >
                         <Input.TextArea className="input-item" />
                       </Form.Item>
                       <Form.Item
-                        label={<span className="form-item-label">Industry Category Project Type</span>}
-                        name="Industry_Category_Project_Type" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Industry Category Project Type
+                          </span>
+                        }
+                        name="Industry_Category_Project_Type"
+                        className="form-item"
                       >
                         <Input className="input-item" />
                       </Form.Item>
                       <Form.Item
-                        label={<span className="form-item-label">Industry Category Sub Type</span>}
-                        name="Industry_Category_Sub_Type" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Industry Category Sub Type
+                          </span>
+                        }
+                        name="Industry_Category_Sub_Type"
+                        className="form-item"
                       >
                         <Input.TextArea className="input-item" />
                       </Form.Item>
                       <Form.Item
-                        label={<span className="form-item-label">Industry Classification</span>}
-                        name="Industry_Classification" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Industry Classification
+                          </span>
+                        }
+                        name="Industry_Classification"
+                        className="form-item"
                       >
                         <Input className="input-item" />
                       </Form.Item>
                       <Form.Item
-                        label={<span className="form-item-label">Other Project Type</span>}
-                        name="Other_Project_Type" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Other Project Type
+                          </span>
+                        }
+                        name="Other_Project_Type"
+                        className="form-item"
                       >
                         <Input className="input-item" />
                       </Form.Item>
-
                       <Form.Item
-                        label={<span className="form-item-label">Within Manila Bay Area</span>}
-                        name="Within_Manila_Bay_Area" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Within Manila Bay Area
+                          </span>
+                        }
+                        name="Within_Manila_Bay_Area"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
-
                       <Form.Item
-                        label={<span className="form-item-label">Receiving Water Body</span>}
-                        name="Receiving_Waterbody" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Receiving Water Body
+                          </span>
+                        }
+                        name="Receiving_Waterbody"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
@@ -265,80 +276,738 @@ const Region = () => {
 
                     <Col span={12} offset={0}>
                       <Form.Item
-                        label={<span className="form-item-label">No. of Employees</span>}
-                        name="Number_of_Employees" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            No. of Employees
+                          </span>
+                        }
+                        name="Number_of_Employees"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
 
                       <Form.Item
                         label={<span className="form-item-label">BOD</span>}
-                        name="BOD_kg_per_day" className="form-item"
+                        name="BOD_kg_per_day"
+                        className="form-item"
                       >
-                        <Input className="input-item-short" addonAfter={<span className="input-addon">kg/day</span>} />
+                        <Input
+                          className="input-item-short"
+                          addonAfter={
+                            <span className="input-addon">kg/day</span>
+                          }
+                        />
                       </Form.Item>
 
                       <Form.Item
-                        label={<span className="form-item-label">Latitude</span>}
-                        name="Latitude" className="form-item"
+                        label={
+                          <span className="form-item-label">Latitude</span>
+                        }
+                        name="Latitude"
+                        className="form-item"
                       >
-                        <Input className="input-item-short" addonAfter={<span className="input-addon">°</span>} />
+                        <Input
+                          className="input-item-short"
+                          addonAfter={<span className="input-addon">°</span>}
+                        />
                       </Form.Item>
 
                       <Form.Item
-                        label={<span className="form-item-label">Longitude</span>}
-                        name="Longitude" className="form-item"
+                        label={
+                          <span className="form-item-label">Longitude</span>
+                        }
+                        name="Longitude"
+                        className="form-item"
                       >
-                        <Input className="input-item-short" addonAfter={<span className="input-addon">°</span>} />
+                        <Input
+                          className="input-item-short"
+                          addonAfter={<span className="input-addon">°</span>}
+                        />
                       </Form.Item>
 
                       <Form.Item
-                        label={<span className="form-item-label">Congressional District</span>}
-                        name="Congressional_District" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Congressional District
+                          </span>
+                        }
+                        name="Congressional_District"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
 
                       <Form.Item
-                        label={<span className="form-item-label">Complete Address</span>}
-                        name="Complete_Address" className="form-item"
+                        label={
+                          <span className="form-item-label">
+                            Complete Address
+                          </span>
+                        }
+                        name="Complete_Address"
+                        className="form-item"
                       >
                         <Input.TextArea className="input-item" />
                       </Form.Item>
 
                       <Form.Item
                         label={<span className="form-item-label">Street</span>}
-                        name="Street" className="form-item"
+                        name="Street"
+                        className="form-item"
                       >
                         <Input className="input-item" />
                       </Form.Item>
 
                       <Form.Item
-                        label={<span className="form-item-label">Barangay</span>}
-                        name="Barangay" className="form-item"
+                        label={
+                          <span className="form-item-label">Barangay</span>
+                        }
+                        name="Barangay"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
 
                       <Form.Item
                         label={<span className="form-item-label">City</span>}
-                        name="City" className="form-item"
+                        name="City"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
 
                       <Form.Item
-                        label={<span className="form-item-label">Province</span>}
-                        name="Province" className="form-item"
+                        label={
+                          <span className="form-item-label">Province</span>
+                        }
+                        name="Province"
+                        className="form-item"
                       >
                         <Input className="input-item-short" />
                       </Form.Item>
-                      
                     </Col>
                   </Row>
                 </Form>
               </TabPane>
-              <TabPane tab="Concerned Unit" key="2"></TabPane>
+
+              <TabPane tab="Monitoring Details" key="2">
+                <Form
+                  layout="horizontal"
+                  initialValues={{
+                    size: componentSize,
+                    UnitInCharge: details["SECTION/UNIT IN CHARGED"],
+                    Inspector: details["INSPECTOR/HANDLER"],
+                    MonitoringSched: details["SCHEDULE OF MONITORING"],
+                    IIS: details["IIS NO#"],
+                    Inspection_Type: details["TYPE OF INSPECTION"],
+                    Report_Type: details["TYPE OF REPORT SUBMITTED"],
+                    Date_Monitored: details["Date Monitored_(mm/dd/yyyy)"],
+                    Date_Routed_IIS: details["Date routed to IIS_(mm/dd/yyyy)"],
+                    Date_Signed_PISMU:
+                      details[
+                        "Date Report signed_(Routed to PISMU)_(mm/dd/yyyy)"
+                      ],
+                    Total_Days_Report_Monitored:
+                      details[
+                        "TOTAL NUMBER OF DAYS (Date monitored VS Date submitted)"
+                      ],
+                    Total_Days_Report_Signed:
+                      details[
+                        "TOTAL NUMBER OF DAYS (Date submitted VS Date report signed)"
+                      ],
+                    PISMU_Routed:
+                      details[
+                        "Tracking of Reports (Routed to Assigned Section/Unit)"
+                      ],
+                    PISMU_Received:
+                      details["Tracking of Reports(Received by Planning Unit)"],
+                    TextArea: details["Remarks/Recommendations"],
+                  }}
+                  onValuesChange={onFormLayoutChange}
+                  size={componentSize}
+                  style={{
+                    maxWidth: 1200,
+                    display: "grid",
+                    alignItems: "center",
+                  }}
+                  variant="filled"
+                  colon={false}
+                  labelCol={{ flex: "150px" }}
+                  labelAlign="left"
+                  labelWrap
+                  wrapperCol={{
+                    flex: 1,
+                  }}
+                >
+                  <Row>
+                    <Col span={12} offset={0}>
+                      {" "}
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Section/Unit in Charge
+                          </span>
+                        }
+                        name="UnitInCharge"
+                        className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Inspector/Case Handler Name
+                          </span>
+                        }
+                        name="Inspector"
+                        className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Monitoring Schedule
+                          </span>
+                        }
+                        name="MonitoringSched"
+                        className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            IIS Transaction No.
+                          </span>
+                        }
+                        name="IIS"
+                        className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Type of Inspection
+                          </span>
+                        }
+                        name="Inspection_Type"
+                        className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Type of Report
+                          </span>
+                        }
+                        name="Report_Type"
+                        className="form-item"
+                      >
+                        <Input className="input-item" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Date Monitored
+                          </span>
+                        }
+                        name="Date_Monitored"
+                        className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Date Routed to IIS
+                          </span>
+                        }
+                        name="Date_Routed_IIS"
+                        className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                      <Form.Item
+                        label={
+                          <span className="form-item-label">
+                            Date Routed to PISMU
+                          </span>
+                        }
+                        name="Date_Signed_PISMU"
+                        className="form-item"
+                      >
+                        <Input className="input-item-short" />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={12} offset={0}>
+                      {" "}
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Total Number of Days Monitoring and Submission
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Monitored vs Submitted
+                            </span>
+                          }
+                          name="Total_Days_Report_Monitored"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Submitted vs Report Signed
+                            </span>
+                          }
+                          name="Total_Days_Report_Signed"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                      </Card>
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Tracking of Reports Information
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Routed to Assigned Section/Unit
+                            </span>
+                          }
+                          name="PISMU_Routed"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Received by Planning Unit
+                            </span>
+                          }
+                          name="PISMU_Received"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Remarks/Recommendations
+                            </span>
+                          }
+                          name="Report_Type"
+                          className="form-item"
+                        >
+                          <Input.TextArea className="input-item" />
+                        </Form.Item>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Form>
+              </TabPane>
+
+              <TabPane tab="Permits" key="3">
+                <Form
+                  layout="horizontal"
+                  initialValues={{
+                    size: componentSize,
+                    ECC_No: details["ECC Reference No"],
+                    ECC_Type: details["ECC Process Type"],
+                    ECC_Amended: details["Date Amended"],
+                    ECC_Approved: details["Date Approved"],
+                    PTO_Code: details["PTO CODE"],
+                    PTO_Issued: details["DATE ISSUED_(mm/dd/yyyy)"],
+                    PTO_Exp: details["DATE OF EXPIRATION_(mm/dd/yyyy)"],
+                    WWDP_Code: details["WWDP CODE"],
+                    WWDP_Issued: details["DATE ISSUED"],
+                    WWDP_Exp: details["DATE OF EXPIRATION_(mm/dd/yyyy)1"],
+                    HAZ: details["HAZWASTE ID"],
+                    HAZ_Issued: details["DATE ISSUED_(mm/dd/yyyy)1"],
+                    Environmental_Laws_Covered:
+                      details[
+                        ("COVERED PD1586",
+                        "COVERED RA8749",
+                        "RA9275",
+                        "COVERED RA6969")
+                      ],
+                    TSD: details["TSD"],
+                    TSD_Exp: details["DATE OF EXPIRATION_(mm/dd/yyyy)2"],
+                    TRC: details["TRC"],
+                    TRC_Exp: details["DATE OF EXPIRATION_(mm/dd/yyyy)3"],
+                    CHEMICAL: details["CHEMICAL PERMITS"],
+                    CHEMICAL_Exp: details["DATE OF EXPIRATION_(mm/dd/yyyy)4"],
+                    PCO_No: details["PCO Accreditation No#"],
+                    PCO_Name: details["PCO Name"],
+                    PCO_Tel: details["PCO Tel No#"],
+                    PCO_Valid: details["PCO Validity"],
+                  }}
+                  onValuesChange={onFormLayoutChange}
+                  size={componentSize}
+                  style={{
+                    maxWidth: 1200,
+                    display: "grid",
+                    alignItems: "center",
+                  }}
+                  variant="filled"
+                  colon={false}
+                  labelCol={{ flex: "150px" }}
+                  labelAlign="left"
+                  labelWrap
+                  wrapperCol={{
+                    flex: 1,
+                  }}
+                >
+                  <Row>
+                    <Col span={12} offset={0}>
+                      {" "}
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            ECC/CNC Information
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Reference Number
+                            </span>
+                          }
+                          name="ECC_No"
+                          className="form-item"
+                        >
+                          <Input className="input-item" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">Permit Type</span>
+                          }
+                          name="ECC_Type"
+                          className="form-item"
+                        >
+                          <Input className="input-item" />
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Date Approved
+                            </span>
+                          }
+                          name="ECC_Approved"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Date Amended
+                            </span>
+                          }
+                          name="ECC_Amended"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                      </Card>
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Permit to Operate
+                          </span>
+                        }
+                        bordered={true}
+                        style={{ marginBottom: 16 }}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">PTO Code</span>
+                          }
+                          name="PTO_Code"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              PTO Date Issued
+                            </span>
+                          }
+                          name="PTO_Issued"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              PTO Expiration Date
+                            </span>
+                          }
+                          name="PTO_Exp"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                      </Card>
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Waste Water Discharge Permit
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">WWDP Code</span>
+                          }
+                          name="WWDP_Code"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              WWDP Date Issued
+                            </span>
+                          }
+                          name="WWDP_Issued"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              WWDP Expiration Date
+                            </span>
+                          }
+                          name="WWDP_Exp"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                      </Card>
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Hazardous Waste Permit
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">Hazwaste ID</span>
+                          }
+                          name="HAZ"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Haz Permit Issued
+                            </span>
+                          }
+                          name="HAZ_Issued"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                      </Card>
+                    </Col>
+
+                    <Col span={12} offset={0}>
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Environmetal Law Coverage
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          name="Environmental_Laws_Covered"
+                          className="form-item"
+                        >
+                          <Checkbox.Group style={{ width: "100%" }}>
+                            <Checkbox value="COVERED PD1586">PD1586</Checkbox>
+                            <Checkbox value="COVERED RA8749">RA8749</Checkbox>
+                            <Checkbox value="RA9275">RA9275</Checkbox>
+                            <Checkbox value="COVERED RA6969">RA6969</Checkbox>
+                          </Checkbox.Group>
+                        </Form.Item>
+                      </Card>
+
+                      <Card
+                        title={
+                          <span className="smaller-title">Other Permits</span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item name="TSD" className="form-item">
+                          <Space size={10}>
+                            <Checkbox.Group style={{ width: "100%" }}>
+                              <Checkbox value="TSD" className="checkbox-item">
+                                Treatment Disposal & Storage Facility
+                              </Checkbox>
+                            </Checkbox.Group>
+
+                            <Form.Item
+                              label={
+                                <span className="form-item-label">
+                                  Expiration Date
+                                </span>
+                              }
+                              name="TSD_Exp"
+                              className="form-item-permit"
+                            >
+                              <Input className="input-item-short" />
+                            </Form.Item>
+                          </Space>
+                        </Form.Item>
+
+                        <Form.Item name="TRC" className="form-item">
+                          <Space size={10}>
+                            <Checkbox.Group style={{ width: "100%" }}>
+                              <Checkbox value="TRC" className="checkbox-item">
+                                Transporter Registration Certificate
+                              </Checkbox>
+                            </Checkbox.Group>
+
+                            <Form.Item
+                              label={
+                                <span className="form-item-label">
+                                  Expiration Date
+                                </span>
+                              }
+                              name="TRC_Exp"
+                              className="form-item-permit"
+                            >
+                              <Input className="input-item-short" />
+                            </Form.Item>
+                          </Space>
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Chemical Permits
+                            </span>
+                          }
+                          name="CHEMICAL"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              Expiration Date
+                            </span>
+                          }
+                          name="CHEMICAL_Exp"
+                          className="form-item"
+                        >
+                          <Input className="input-item-short" />
+                        </Form.Item>
+                      </Card>
+
+                      <Card
+                        title={
+                          <span className="smaller-title">
+                            Pollution Control Officer
+                          </span>
+                        }
+                        bordered={true}
+                        className="card-item"
+                      >
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              PCO Accreditation No.
+                            </span>
+                          }
+                          name="PCO_No"
+                          className="form-item"
+                        >
+                          <Input className="input-item" />
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">PCO Name</span>
+                          }
+                          name="PCO_No"
+                          className="form-item"
+                        >
+                          <Input className="input-item" />
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              PCO Tel. No.
+                            </span>
+                          }
+                          name="PCO_No"
+                          className="form-item"
+                        >
+                          <Input className="input-item" />
+                        </Form.Item>
+
+                        <Form.Item
+                          label={
+                            <span className="form-item-label">
+                              PCO Validity
+                            </span>
+                          }
+                          name="PCO_No"
+                          className="form-item"
+                        >
+                          <Input className="input-item" />
+                        </Form.Item>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Form>
+              </TabPane>
+
+              <TabPane tab="Legal Unit" key="4"></TabPane>
             </Tabs>
             <div
               style={{
@@ -353,18 +1022,18 @@ const Region = () => {
               >
                 Update
               </button>
-              <button
-                className="modal-close-button"
-                onClick={() => AntModal.destroyAll()}
-              >
-                Close
-              </button>
             </div>
           </div>
         ),
         onOk() {},
         width: 1200,
         okButtonProps: { hidden: true },
+        icon: null,
+        closable: true,
+        closeIcon: <CloseOutlined style={{ fontSize: "20px" }} />,
+        maskClosable: true,
+        centered: true,
+        zIndex: 1002,
       });
     } catch (error) {
       console.error("Error fetching details:", error);

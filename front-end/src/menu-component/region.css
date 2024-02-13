@@ -295,16 +295,21 @@
 }
 
 .form-item{
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+.form-item-permit{
+  margin-bottom: 0;
 }
 
 .form-item-label{
   font-size: 12px;
   color: #0056b3;
+  //width: 150px;
 }
 
 .input-item{
-  width: 350px;
+  width: 300px;
   text-align: left;
   align-items: center;
   color: #5c5c5c;
@@ -312,7 +317,7 @@
 }
 
 .input-item-short{
-  width: 130px;
+  width: 200px;
   text-align: left;
   align-items: center;
   color: #5c5c5c;
@@ -324,3 +329,19 @@
   font-size: 12px;
 }
 
+
+.smaller-title{
+  font-size: 12px;
+  padding: 0;
+}
+
+.card-item{
+  width: 500px;
+  margin-bottom: 10px;
+  line-height: 15px;
+}
+
+.checkbox-item{
+  font-size: 10px;
+  width: 150px;
+}
